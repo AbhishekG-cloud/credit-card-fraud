@@ -221,7 +221,8 @@ __marimo__/
 creditcard.csv
 artifact/*.csv
 
-
+artifact/
+*.csv
 ## git rm -r --cached artifact/
 ## git add .
 ## git commit -m "Data Ingestion Complete"
