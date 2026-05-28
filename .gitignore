@@ -220,3 +220,9 @@ __marimo__/
 # dataset
 creditcard.csv
 artifact/*.csv
+
+
+## git rm -r --cached artifact/
+## git add .
+## git commit -m "Data Ingestion Complete"
+## git push -u origin main
