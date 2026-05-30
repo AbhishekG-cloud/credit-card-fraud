@@ -6,11 +6,22 @@ from dataclasses import dataclass
 from  src.exception import CustomException
 from src.logger import logging
 from sklearn.preprocessing import StandardScaler
-from src.components.data_ingestion import DataIngestion
+
+from src.utils import save_object
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
+from sklearn.base import BaseEstimator, TransformerMixin
 
+class HourFeatureExtractor(BaseEstimator, TransformerMixin):
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        X = X.copy()
+        X["Hour"] = (X["Time"] // 3600) % 24
+        return X
 
 
 @dataclass
@@ -21,18 +32,23 @@ class DataTransformation:
     def __init__(self):
         self.data_transfromation_config = DataTransformationConfig()
     
-    def get_data_transformation_object():
+    def get_data_transformation_object(self):
         '''
         this function is responsible for data transformation
         '''
         try:
-            trans_pipeline = Pipeline(steps=[("Scaler",StandardScaler())
-                                       ("Imputer",SimpleImputer(strategy="mean"))
+            num_cls = ['Time', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10',
+       'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20',
+       'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount',
+       ]
+            trans_pipeline = Pipeline(steps=[("Scaler",StandardScaler()),
+                                       ("Imputer",SimpleImputer(strategy="mean")),
+                                         
                                        ]
                                        )
             
             logging.info("Columns Tsnadard Scaling Completed")
-            preprcessor= ColumnTransformer([("tran_pipeline",trans_pipeline)])
+            preprcessor= ColumnTransformer([("tran_pipeline",trans_pipeline,num_cls)])
             return preprcessor
         except Exception as e:
             raise CustomException(e,sys)

@@ -219,6 +219,7 @@ __marimo__/
 .streamlit/secrets.toml
 # dataset
 creditcard.csv
+creditcard_1.csv
 artifact/*.csv
 
 artifact/

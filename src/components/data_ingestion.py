@@ -52,3 +52,4 @@ if __name__ == "__main__":
     obj = DataIngestion()
     train_data,test_data = obj.initiate_data_ingestion()
     data_transfromation = DataTransformation()
+    data_transfromation.initaite_data_transformation(train_data,test_data)
