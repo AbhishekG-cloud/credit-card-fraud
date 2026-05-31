@@ -11,17 +11,8 @@ from src.utils import save_object
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-from sklearn.base import BaseEstimator, TransformerMixin
 
-class HourFeatureExtractor(BaseEstimator, TransformerMixin):
 
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        X = X.copy()
-        X["Hour"] = (X["Time"] // 3600) % 24
-        return X
 
 
 @dataclass

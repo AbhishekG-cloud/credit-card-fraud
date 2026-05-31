@@ -5,6 +5,8 @@ import dill
 import pandas as pd
 import numpy as np
 
+from sklearn.metrics import classification_report,accuracy_score,confusion_matrix
+
 from src.exception import CustomException
 
 
@@ -19,3 +21,30 @@ def save_object(file_path, obj):
 
     except Exception as e:
         raise CustomException(e, sys)
+
+
+def evaluate_model(X_train,y_train,X_test,y_test,models):
+    try:
+        report = {}
+        for i in range(len(list(models))):
+            model  = list(models.values())[i]
+
+            model.fit(X_train,y_train)
+
+            y_train_pred  = model.predict(X_train)
+
+            y_test_pred  = model.predict(X_test)
+
+            model_report_traiing_data = classification_report(y_train,y_train_pred)
+            model_report_test_data = classification_report(y_test,y_test_pred)
+
+            report[list(models.keys())[i]] = model_report_test_data
+
+    
+        return report
+    except Exception as e:
+        raise CustomException(e,sys)
+    
+
+
+        
