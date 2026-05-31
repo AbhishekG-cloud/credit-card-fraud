@@ -53,5 +53,5 @@ if __name__ == "__main__":
     train_data,test_data = obj.initiate_data_ingestion()
     data_transfromation = DataTransformation()
     train_data,test_data,_ = data_transfromation.initaite_data_transformation(train_data,test_data)
-    tunning = Tunner()
-    tunning.tunner(X_train = train_data[:,:-1],y_train=train_data[:,-1])
+    ##tunning = Tunner()
+    ##tunning.tunner(X_train = train_data[:,:-1],y_train=train_data[:,-1])

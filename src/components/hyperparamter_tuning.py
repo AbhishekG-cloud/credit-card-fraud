@@ -22,7 +22,7 @@ class Tunner:
         models = {
     
         "LogisticRegressionCV": LogisticRegressionCV(),
-        ##"AdaBoostClassifier": AdaBoostClassifier(),
+        "AdaBoostClassifier": AdaBoostClassifier(),
         "XGBClassifier": XGBClassifier(
         objective='binary:logistic',
         eval_metric='logloss',
@@ -84,5 +84,5 @@ class Tunner:
 
         print(f"Best Params: {search.best_params_}")
         print(f"Best CV Score: {search.best_score_:.4f}")
-                
+## best model in Xgboost              
 ##'n_estimators': 200, 'max_depth': 5, 'learning_rate': 0.05 for Xg boost
