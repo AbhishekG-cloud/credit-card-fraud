@@ -46,6 +46,9 @@ class DataTransformation:
         
 
     def initaite_data_transformation(self,train_path,test_path):
+        """
+        main transformation of data
+        """
         
         try:
             logging.info("Read train and test data")
@@ -75,7 +78,7 @@ class DataTransformation:
                 input_feature_test_trnsfmd,np.array(output_feature_test_data)
             ]
 
-            logging.info("savde preprocessor object")
+            logging.info("saved preprocessor object")
             save_object(
                 file_path = self.data_transfromation_config.preprocessor_obj_file_path,
                 obj = preprocessing_obj
