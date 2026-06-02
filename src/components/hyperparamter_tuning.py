@@ -2,6 +2,8 @@ import os
 import sys
 import pandas as pd
 import numpy as np
+import warnings
+warnings.filterwarnings("ignore")
 
 from  src.exception import CustomException
 from src.logger import logging
@@ -17,17 +19,15 @@ from xgboost import XGBClassifier
 
 class Tunner:
     def tunner(self,X_train,y_train):
+        best_models = {}
+        best_scores = {}
        
 
         models = {
     
         "LogisticRegressionCV": LogisticRegressionCV(),
         "AdaBoostClassifier": AdaBoostClassifier(),
-        "XGBClassifier": XGBClassifier(
-        objective='binary:logistic',
-        eval_metric='logloss',
-        use_label_encoder=False
-        )
+        "XGBClassifier": XGBClassifier()
         }
 
         param_grids = {
@@ -40,8 +40,8 @@ class Tunner:
         },
 
         "AdaBoostClassifier": {
-        "n_estimators": [50, 100, 200, 500],
-        "learning_rate": [0.001, 0.01, 0.1, 0.5, 1.0]
+        "n_estimators": [100,200],
+        "learning_rate": [0.1,.5,1.0]
         },
 
         "XGBClassifier": {
@@ -51,7 +51,7 @@ class Tunner:
 
         "n_estimators" :[100, 200]
         }}
-        best_models = {}
+        results = {}
 
         for name, model in models.items():
 
@@ -73,16 +73,25 @@ class Tunner:
             estimator=model,
             param_grid=param_grids[name],
             scoring='roc_auc',
-            cv=5,
+            cv=4,
             n_jobs=-1,
             verbose=2
         )
 
             search.fit(X_train, y_train)
+            results[name] = {
+            "best_estimator": search.best_estimator_,
+            "best_params": search.best_params_,
+            "best_score": search.best_score_
+            }
+        best_model_name = max(results, key=lambda x: results[x]["best_score"])
 
-        best_models[name] = search.best_estimator_
+        return {
+        "model_name": best_model_name,
+        "best_estimator": results[best_model_name]["best_estimator"],
+        "best_params": results[best_model_name]["best_params"],
+        "best_score": results[best_model_name]["best_score"]
+        }
+        
 
-        print(f"Best Params: {search.best_params_}")
-        print(f"Best CV Score: {search.best_score_:.4f}")
-## best model in Xgboost              
-##'n_estimators': 200, 'max_depth': 5, 'learning_rate': 0.05 for Xg boost
+        

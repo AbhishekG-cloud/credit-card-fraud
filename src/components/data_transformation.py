@@ -32,13 +32,13 @@ class DataTransformation:
        'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20',
        'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount',
        ]
-            trans_pipeline = Pipeline(steps=[("Scaler",StandardScaler()),
+            trans_pipeline = Pipeline(steps=[
                                        ("Imputer",SimpleImputer(strategy="mean")),
                                          
                                        ]
                                        )
             
-            logging.info("Columns Tsnadard Scaling Completed")
+            logging.info("Columns Transformed Scaling Completed")
             preprcessor= ColumnTransformer([("tran_pipeline",trans_pipeline,num_cls)])
             return preprcessor
         except Exception as e:

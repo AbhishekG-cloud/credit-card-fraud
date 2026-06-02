@@ -9,7 +9,9 @@ from  src.exception import CustomException
 from src.logger import logging
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
-from src.components.hyperparamter_tuning import Tunner
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
 
 
 @dataclass
@@ -35,7 +37,7 @@ class DataIngestion:
 
             logging.info("Train test Split initiated")
 
-            train_set,test_set = train_test_split(df,test_size=.2,random_state=42)
+            train_set,test_set = train_test_split(df,test_size=.25,random_state=42)
             train_set.to_csv(self.ingestion_config.train_data_path,index= False,header=True)
             test_set.to_csv(self.ingestion_config.test_data_path,index = False,header = True)
 
@@ -55,5 +57,6 @@ if __name__ == "__main__":
     train_data,test_data = obj.initiate_data_ingestion()
     data_transfromation = DataTransformation()
     train_data,test_data,_ = data_transfromation.initaite_data_transformation(train_data,test_data)
-    ##tunning = Tunner()
-    ##tunning.tunner(X_train = train_data[:,:-1],y_train=train_data[:,-1])
+    model = ModelTrainer()
+    print(model.initiate_training(train_data,test_data))
+    
