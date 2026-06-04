@@ -5,13 +5,6 @@ from dataclasses import dataclass
 
 from src.exception import CustomException
 from src.utils import load_object
-
-class PredPipeline():
-    def __init__(self):
-        pass
-        
-
-
 @dataclass
 class CustomData:
     Time: float
@@ -47,3 +40,27 @@ class CustomData:
 
     def get_data_as_dataframe(self):
         return pd.DataFrame([self.__dict__])
+
+class PredPipeline():
+    def __init__(self):
+        pass
+    def predict(self,features):
+        try:
+            model_path = "artifacts\model.pkl"
+            preprocessor_path = "artifacts\preprocessor.pkl"
+            model = load_object(file_path = model_path)
+            preprocessor = load_object(file_path=preprocessor_path)
+            scaled_data = preprocessor.transform(features)
+            preds = model.predict(scaled_data)
+
+
+            return preds
+        
+
+        except Exception as e:
+            raise CustomException(e,sys)
+        
+
+        
+
+
