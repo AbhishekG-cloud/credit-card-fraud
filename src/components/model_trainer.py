@@ -55,7 +55,10 @@ class ModelTrainer:
                 obj= model
                         )
             model.fit(X_train,y_train)
-            y_pred = model.predict(X_test)
+            y_proba = model.predict_proba(X_test)[:,1]
+            thresh = 0.169
+            y_pred = (y_proba>=thresh).astype(int)
+            
 
             report = classification_report(y_test,y_pred)
             return report
