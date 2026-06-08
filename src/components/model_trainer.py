@@ -13,7 +13,8 @@ from src.components.hyperparamter_tuning import Tunner
 
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.ensemble import RandomForestClassifier,AdaBoostClassifier
-from sklearn.metrics import classification_report,accuracy_score,confusion_matrix
+
+from sklearn.metrics import classification_report,accuracy_score,confusion_matrix,roc_auc_score
 from xgboost import XGBClassifier
 
 
@@ -61,7 +62,8 @@ class ModelTrainer:
             
 
             report = classification_report(y_test,y_pred)
-            return report
+            score = roc_auc_score(y_test,y_pred)
+            return report,score
 
 
 
