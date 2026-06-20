@@ -1,0 +1,8 @@
+venv/
+.git/
+__pycache__/
+.ipynb_checkpoints/
+logs/
+CREDIT_CARD_FRAUD.egg-info/
+notebooks/
+artifact/

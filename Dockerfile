@@ -1,7 +1,13 @@
 FROM python:3.10-slim
-WORKDIR /app
-COPY . /app
-RUN apt update -y && apt install awscli -y
 
-RUN pip install -r requirement.txt
+WORKDIR /app
+
+COPY requirement.txt .
+
+RUN pip install --no-cache-dir -r requirement.txt
+
+COPY . .
+
+EXPOSE 5000
+
 CMD ["python","app.py"]
