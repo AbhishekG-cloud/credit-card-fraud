@@ -228,3 +228,5 @@ artifact/
 ## git add .
 ## git commit -m "Data Ingestion Complete"
 ## git push -u origin main
+resume.txt
+chek.py
